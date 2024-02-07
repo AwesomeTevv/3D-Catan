@@ -4,14 +4,17 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87ceeb);
 
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
+// const camera = new THREE.PerspectiveCamera(
+//   75,
+//   window.innerWidth / window.innerHeight,
+//   0.1,
+//   1000
+// );
 
-camera.position.set(10, 10, 10);
+const camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, -5, 5 );
+scene.add( camera );
+
+camera.position.set(1, 1, 1);
 
 const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -35,7 +38,7 @@ scene.add(ambientLight);
 const hemishphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
 scene.add(hemishphereLight);
 
-const y = 0.125;
+const y = 0.125 / 2;
 const z = Math.sqrt(3) / 2;
 
 const verticesOfHex = new Float32Array([
@@ -89,14 +92,20 @@ geometry.setIndex(indicesOfFaces);
 
 geometry.setAttribute('position', new THREE.BufferAttribute(verticesOfHex, 3));
 
-const material = new THREE.MeshPhongMaterial();
+const material = new THREE.MeshBasicMaterial(
+  { 
+    color: 0xffff00,
+    opacity: 0.5,
+    transparent: true
+  } 
+  );
 
 const polyhedron = new THREE.Mesh(geometry, material);
 
 scene.add(polyhedron);
 
 const edges = new THREE.EdgesGeometry( geometry ); 
-const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial( { color: 0xffffff } ) ); 
+const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial( { color: 0x000000 } ) ); 
 scene.add( line );
 
 function animate() {
