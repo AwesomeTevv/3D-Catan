@@ -35,7 +35,7 @@ scene.add(ambientLight);
 const hemishphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
 scene.add(hemishphereLight);
 
-const y = 1;
+const y = 0.25;
 const z = Math.sqrt(3) / 2;
 
 const verticesOfHex = [
@@ -64,6 +64,24 @@ const indicesOfFaces = [
   12,3,4,
   12,4,5,
   12,5,0,
+  0,6,7,
+  7,1,0,
+  1,7,8,
+  8,2,1,
+  2,8,9,
+  9,3,2,
+  3,9,10,
+  10,4,3,
+  4,10,11,
+  11,5,4,
+  5,11,6,
+  6,0,5,
+  7,6,13,
+  8,7,13,
+  9,8,13,
+  10,9,13,
+  11,10,13,
+  6,11,13
 ];
 
 const geometry = new THREE.PolyhedronGeometry(
