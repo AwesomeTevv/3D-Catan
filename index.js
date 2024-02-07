@@ -13,7 +13,7 @@ const camera = new THREE.PerspectiveCamera(
 
 camera.position.set(10, 10, 10);
 
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
@@ -35,33 +35,57 @@ scene.add(ambientLight);
 const hemishphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
 scene.add(hemishphereLight);
 
-const verticesOfCube = [
-  -1, -1, -1, 1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, 1, 1, -1, 1, 1, 1, 1, -1,
-  1, 1,
+const y = 1;
+const z = Math.sqrt(3) / 2;
+
+const verticesOfHex = [
+  -0.5,y,z, // 0
+  0.5,y,z, // 1
+  1,y,0, // 2
+  0.5,y,-z, // 3
+  -0.5,y,-z, // 4
+  -1,y,0, // 5
+
+  -0.5,-y,z, // 6
+  0.5,-y,z, // 7
+  1,-y,0, // 8
+  0.5,-y,-z, // 9
+  -0.5,-y,-z, // 10
+  -1,-y,0, // 11
+
+  0,y,0, // 12
+  0,-y,0 // 13
 ];
 
-const verticesOfHex = [-1, 1, -1, 1, 1, -1];
-
 const indicesOfFaces = [
-  2, 1, 0, 0, 3, 2, 0, 4, 7, 7, 3, 0, 0, 1, 5, 5, 4, 0, 1, 2, 6, 6, 5, 1, 2, 3,
-  7, 7, 6, 2, 4, 5, 6, 6, 7, 4,
+  12,0,1,
+  12,1,2,
+  12,2,3,
+  12,3,4,
+  12,4,5,
+  12,5,0,
 ];
 
 const geometry = new THREE.PolyhedronGeometry(
-  verticesOfCube,
+  verticesOfHex,
   indicesOfFaces,
-  1,
+  5,
   0
 );
 
 const material = new THREE.MeshPhongMaterial({
-  wireframe: true,
+  wireframe: false,
   wireframeLinewidth: 5,
+  
 });
 
 const polyhedron = new THREE.Mesh(geometry, material);
 
 scene.add(polyhedron);
+
+const edges = new THREE.EdgesGeometry( geometry ); 
+const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial( { color: 0xffffff } ) ); 
+scene.add( line );
 
 function animate() {
   requestAnimationFrame(animate);
