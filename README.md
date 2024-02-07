@@ -1,1 +1,1 @@
-# 3D-Catan
+# 3D Catan
