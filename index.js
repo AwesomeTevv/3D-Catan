@@ -35,10 +35,10 @@ scene.add(ambientLight);
 const hemishphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
 scene.add(hemishphereLight);
 
-const y = 0.25;
+const y = 0.125;
 const z = Math.sqrt(3) / 2;
 
-const verticesOfHex = [
+const verticesOfHex = new Float32Array([
   -0.5,y,z, // 0
   0.5,y,z, // 1
   1,y,0, // 2
@@ -55,7 +55,7 @@ const verticesOfHex = [
 
   0,y,0, // 12
   0,-y,0 // 13
-];
+]);
 
 const indicesOfFaces = [
   12,0,1,
@@ -84,18 +84,12 @@ const indicesOfFaces = [
   6,11,13
 ];
 
-const geometry = new THREE.PolyhedronGeometry(
-  verticesOfHex,
-  indicesOfFaces,
-  5,
-  0
-);
+const geometry = new THREE.BufferGeometry();
+geometry.setIndex(indicesOfFaces);
 
-const material = new THREE.MeshPhongMaterial({
-  wireframe: false,
-  wireframeLinewidth: 5,
-  
-});
+geometry.setAttribute('position', new THREE.BufferAttribute(verticesOfHex, 3));
+
+const material = new THREE.MeshPhongMaterial();
 
 const polyhedron = new THREE.Mesh(geometry, material);
 
