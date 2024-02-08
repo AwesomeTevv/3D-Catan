@@ -11,7 +11,8 @@ scene.background = new THREE.Color(0x87ceeb);
 //   1000
 // );
 
-const camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, -5, 5 );
+// const camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, -5, 5 );
+const camera = new THREE.OrthographicCamera();
 scene.add( camera );
 
 camera.position.set(1, 1, 1);
