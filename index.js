@@ -11,8 +11,8 @@ scene.background = new THREE.Color(0x87ceeb);
 //   1000
 // );
 
-// const camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, -5, 5 );
-const camera = new THREE.OrthographicCamera();
+// const camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2);
+const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 2000);
 scene.add( camera );
 
 camera.position.set(1, 1, 1);
@@ -22,12 +22,13 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
 
 const axesHelper = new THREE.AxesHelper(1000);
 scene.add(axesHelper);
 
 window.onresize = function () {
-  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.aspect = 1;
   camera.updateProjectionMatrix();
 
   renderer.setSize(window.innerWidth, window.innerHeight);
